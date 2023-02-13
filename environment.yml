@@ -12,6 +12,7 @@ dependencies:
   - jupyter
   - seaborn
   - scikit-learn
+  - pygame
   - pip
   - pip:
     - gym==0.23.1
