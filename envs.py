@@ -230,7 +230,6 @@ class Maze(gym.Env):
         else:
             raise ValueError("Action value not supported:", action)
         if next_state in self.maze[state]:
-            print(f"self.maze[state] {self.maze[state]}")
             return next_state
         return state
 
