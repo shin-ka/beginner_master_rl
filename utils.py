@@ -215,7 +215,7 @@ def seed_everything(env: gym.Env, seed: int = 42) -> None:
     Returns:
         None.
     """
-    env.seed(seed)
+    #env.seed(seed)
     env.action_space.seed(seed)
     env.observation_space.seed(seed)
     np.random.seed(seed)
