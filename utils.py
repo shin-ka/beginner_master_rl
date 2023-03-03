@@ -108,7 +108,7 @@ def test_agent(env: gym.Env, policy: Callable, episodes: int = 10) -> None:
     for episode in range(episodes):
         state = env.reset()
         done = False
-        img = plt.imshow(env.render(mode='rgb_array'))
+        img = plt.imshow(env.render())
         while not done:
             p = policy(state)
             if isinstance(p, np.ndarray):
@@ -116,7 +116,7 @@ def test_agent(env: gym.Env, policy: Callable, episodes: int = 10) -> None:
             else:
                 action = p
             next_state, _, done, _ = env.step(action)
-            img.set_data(env.render(mode='rgb_array'))
+            img.set_data(env.render())
             plt.axis('off')
             display.display(plt.gcf())
             display.clear_output(wait=True)
@@ -227,18 +227,19 @@ def test_policy_network(env, policy, episodes=1):
     from IPython import display
     plt.figure(figsize=(6, 6))
     for episode in range(episodes):
-        state = env.reset()
+        state, info = env.reset()
         done = False
-        img = plt.imshow(env.render(mode='rgb_array'))
+        img = plt.imshow(env.render())
         while not done:
             state = torch.from_numpy(state).unsqueeze(0).float()
             action = policy(state).multinomial(1).item()
-            next_state, _, done, _ = env.step(action)
-            img.set_data(env.render(mode='rgb_array'))
+            next_state, _, done_ter, done_trun, _ = env.step(action)
+            img.set_data(env.render())
             plt.axis('off')
             display.display(plt.gcf())
             display.clear_output(wait=True)
             state = next_state
+            done = done_ter or done_ter
 
 
 def plot_action_probs(probs, labels):
